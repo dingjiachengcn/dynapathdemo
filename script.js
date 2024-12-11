@@ -1,16 +1,16 @@
-// 显示参数滑块值
+
 function updateSliderValues() {
     document.getElementById('w1Val').innerText = document.getElementById('w1').value;
     document.getElementById('w2Val').innerText = document.getElementById('w2').value;
     document.getElementById('thetaVal').innerText = document.getElementById('theta').value;
 }
 
-// 初始化滑块事件
+
 document.getElementById('w1').addEventListener('input', updateSliderValues);
 document.getElementById('w2').addEventListener('input', updateSliderValues);
 document.getElementById('theta').addEventListener('input', updateSliderValues);
 
-// 确认按钮逻辑
+
 document.getElementById('confirmBtn').addEventListener('click', () => {
     const dataset = document.getElementById('datasetSelect').value;
     const w1 = document.getElementById('w1').value;
@@ -20,7 +20,7 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
     const timeRange = document.getElementById('timeRange').value;
     const mode = document.querySelector('input[name="mode"]:checked').value;
 
-    // 文件上传信息
+
     const fileInput = document.getElementById('fileUpload');
     let fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "No file";
 
@@ -28,7 +28,7 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
     alert("Configuration confirmed. Now you can run the experiment.");
 });
 
-// 运行与停止逻辑
+
 let runInterval = null;
 let startTime = null;
 
@@ -40,7 +40,6 @@ document.getElementById('runBtn').addEventListener('click', () => {
         document.getElementById('execTime').innerText = "Execution Time: " + elapsed + "s";
     }, 100);
     
-    // 模拟数据处理时间, 3秒后完成
     setTimeout(() => {
         finishExperiment();
     }, 3000);
@@ -55,7 +54,6 @@ document.getElementById('stopBtn').addEventListener('click', () => {
     document.getElementById('execTime').innerText = "Execution Time: -";
 });
 
-// 实验完成后显示与图匹配的结果与图像
 function finishExperiment() {
     if(runInterval) {
         clearInterval(runInterval);
@@ -63,9 +61,6 @@ function finishExperiment() {
     }
     document.getElementById('statusText').innerText = "Completed";
 
-    // 根据提供的图和场景信息输出结果日志
-    // 此图节点1,5,10为HDV，关键边为(1->2) T1, (5->6) T2, (10->11) T3
-    // 可对比分析，如此内容更贴合这幅图
     const log = `
 Experiment Completed.
 
@@ -85,9 +80,9 @@ No strict HDV path found in this scenario, but Relaxed queries reveal how HDVs g
     `;
     document.getElementById('resultsLog').innerText = log;
 
-    // 在图区域显示给定的图像
+
     const container = document.getElementById('graphContainer');
-    container.innerHTML = ""; // 清空占位内容
+    container.innerHTML = ""; 
 
     const img = document.createElement('img');
     img.src = "temporal_graph_with_labels.png"; 
@@ -96,7 +91,6 @@ No strict HDV path found in this scenario, but Relaxed queries reveal how HDVs g
     document.getElementById('execTime').innerText = "Execution Time: " + ((Date.now() - startTime)/1000).toFixed(2) + "s";
 }
 
-// 导出结果功能
 document.getElementById('downloadResultsBtn').addEventListener('click', () => {
     const logText = document.getElementById('resultsLog').innerText;
     const blob = new Blob([logText], {type: 'text/plain'});
@@ -109,7 +103,7 @@ document.getElementById('downloadResultsBtn').addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
-// 导出图像功能 (简单方案为直接下载当前图像文件)
+
 document.getElementById('saveImgBtn').addEventListener('click', () => {
     const container = document.getElementById('graphContainer');
     const img = container.querySelector('img');

@@ -3,8 +3,7 @@ app = Flask(__name__)
 
 @app.route("/compute")
 def compute():
-    # 假设在这里调用您的Python算法，获得HDV数量与Relaxed路径结果
-    # 此处为示例数据
+
     result = {
         "hdv_count": 7,
         "path_count": 3,
